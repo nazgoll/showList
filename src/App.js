@@ -1,48 +1,39 @@
 import {useState} from "react";
 import Header from "./components/Header";
 import Box from "./components/Box";
-import List from "./components/List";
+import Item from "./components/Item";
 
-function App=() =>{
-    const [information, setInformation] = useState(null);
-    const handleInformation(list)=>{
-        setContact(list)
-    }
-    const info=[
-        {name:"nazgol",family:"Momeni"},
-        {name:"mehrana",family:"Sadeghi"},
-        {name:"zahra",family:"Mosavi"},
-
+function App() {
+    const [selectedUser,setSelecterUser]=useState(null);
+    const List = [
+        {id: 1, name: 'Nazgol', age: '21'},
+        {id: 2, name: 'Sajedeh', age: '22'},
+        {id: 3, name: 'Mehrana', age: '21'},
     ];
+    const handleClick = (id) => {
+      const selected= List.find((item)=>item.id ===id)
 
+    }
     return (
-        <div className={"w-screen h-screen flex flex-row bg-white "}>
-            <div className={"basis-3/4 h-full border-r-custom-color-4 border-r-4 flex flex-col items-center "}>
-                <Header headerText={"ShowList"}/>
-                <div className={"w-3/5 h-3/5 p-10 bg-opacity-60 bg-custom-color-2 backdrop-filter flex shadow-black shadow-lg  flex-col  items-center p-10" +
-                        "backdrop-blur-lg shadow-lg rounded-lg "}>
-                        {info.map((contact)=>(
-                            <List
-                            name={contact.name}
-                            family={contact.family}
-                            onClick={(contact)=>handleInformation(contact)}
-                            />
-                            ))}
-                    <div className={"bg-custom-color-1 my-2 mt-14 rounded-lg shadow-black shadow-lg  flex-col justify-center items-center inline-flex hover:bg-custom-color-4 hover:text-custom-color-1 w-36"}
-                        onClick={<List/>}>
+        <div className={"flex h-screen w-full justify-between bg-custom-color-1  "}>
+            <div className={"w-full flex justify-center mt-2"}>
+                {selectedUser?(
+                    <div>
+                        <div>age:{selectedUser.age}</div>
+                        <div>name:{selectedUser.name}</div>
 
                     </div>
-                </div>
+                ):(
+                    <div>user not found</div>
+                )}
             </div>
-            const Order = ({ title, item }) => (
-            <div className={"basis-1/4 h-full bg-custom-color-2 flex flex-col items-center "}>
-                <Header headerText={"Members"}></Header>
-                {/*<button onClick={"nazgol"}><Box headerText={"Nazgol"}/></button>*/}
-                {/*<Box headerText={"Mehrana"}/>*/}
-                {/*<Box headerText={"zahra"}/>*/}
-                {}
+            <div className={"w-full max-w-xs bg-custom-color-2 p-5 flex flex-col"}>
+                {List.map(({id, name}, index) => (
+                    <button onClick={() => handleClick(id)} type={"button"} key={id} className={"p-4 bg-slate-200 hover:bg-slate-300 duration-300 rounded-lg mt-5 "}>
+                        {name}
+                    </button>
+                ))}
             </div>
-            )
         </div>
     )
 }
